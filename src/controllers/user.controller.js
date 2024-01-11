@@ -11,7 +11,10 @@ export const createUser = async (req, res, next) => {
       message: 'User created successfully'
     });
   } catch (error) {
-    next(error);
+      res.status(HttpStatus.BAD_REQUEST).json({
+      code: HttpStatus.BAD_REQUEST,
+      message: `${error}`
+    });
   }              
 };
 
@@ -25,6 +28,9 @@ export const logIn = async (req, res, next) => {
       message: 'User Logged-In successfully'
     });
   } catch (error) {
-    next(error);
+    res.status(HttpStatus.BAD_REQUEST).json({
+      code: HttpStatus.BAD_REQUEST,
+      message: `${error}`
+    });
   }
 };
