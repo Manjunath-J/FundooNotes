@@ -11,7 +11,8 @@ const routes = () => {
   router.get('/', (req, res) => {
     res.json('Welcome');
   });
-  router.use('/FundooNotes', userRoute);
+  router.use('/User', userRoute);
+  router.use('/User/Notes', userRoute);
 
   return router;
 };
