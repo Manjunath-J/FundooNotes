@@ -21,7 +21,7 @@ export const getAllNotes = async (req, res, next) => {
 
 export const getNote = async (req, res, next) => {
   try {
-    const data = await NoteService.getNote(req.params._id);
+    const data = await NoteService.getNote(req.params.Title);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: data,
@@ -38,7 +38,6 @@ export const getNote = async (req, res, next) => {
 
 export const newNote = async (req, res, next) => {
   try {
-    console.log("Message ----------",req.body);
     const data = await NoteService.newNote(req.body);
     res.status(HttpStatus.CREATED).json({
       code: HttpStatus.CREATED,
@@ -56,7 +55,7 @@ export const newNote = async (req, res, next) => {
 
 export const updateNote = async (req, res, next) => {
   try {
-    const data = await NoteService.updateNote(req.params._id, req.body);
+    const data = await NoteService.updateNote(req.params.Title, req.body);
     res.status(HttpStatus.ACCEPTED).json({
       code: HttpStatus.ACCEPTED,
       data: data,
@@ -73,7 +72,7 @@ export const updateNote = async (req, res, next) => {
 
 export const deleteNote = async (req, res, next) => {
   try {
-    await NoteService.deleteNote(req.params._id);
+    await NoteService.deleteNote(req.params.Title);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: [],

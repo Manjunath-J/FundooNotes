@@ -16,7 +16,7 @@ export const createUser = async (body) => {
 };
 
 const jwt = require('jsonwebtoken');
-const secretKey = 'mySecretKey';
+
 
 //User Sign-In
 export const logIn = async (body) => {
@@ -31,7 +31,7 @@ export const logIn = async (body) => {
   const payload = { email:body.email };
   
   // const expiresIn = "1h";
-  const token = jwt.sign(payload, secretKey);
+  const token = jwt.sign(payload, process.env.SECRET_KEY);
   
   return token;
 };
@@ -44,7 +44,7 @@ export const authenticateToken = (req, res) => {
     if (!token) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
-    const decoded = jwt.verify(token, secretKey);
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
     console.log(decoded);
     res.json({ message: "Token Veification Successfull",decoded });
     return decoded;

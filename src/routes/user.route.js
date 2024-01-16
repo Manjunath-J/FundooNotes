@@ -1,6 +1,6 @@
 import express from 'express';
 import * as userController from '../controllers/user.controller';
-import { newUserValidator, newNoteValidator } from '../validators/user.validator';
+import { newUserValidator } from '../validators/user.validator';
 import { userAuth } from '../middlewares/auth.middleware';
 import { authenticateToken } from '../services/user.service';
 
@@ -13,6 +13,6 @@ router.post('/signup', newUserValidator, userController.createUser);
 router.post('/signin', userController.logIn);
 
 // router.post('/signin/authenticate', userAuth.logIn);
-router.get('/signin/authenticate', authenticateToken);
+router.get('/signin/auth', authenticateToken);
 
 export default router;

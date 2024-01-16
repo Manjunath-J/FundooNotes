@@ -13,10 +13,10 @@ export const newNote = async (body) => {
 };
 
 //update single Note
-export const updateNote = async (_id, body) => {
-  const data = await Note.findByIdAndUpdate(
+export const updateNote = async (title, body) => {
+  const data = await Note.findOneAndUpdate(
     {
-      _id
+      title
     },
     body,
     {
@@ -27,13 +27,13 @@ export const updateNote = async (_id, body) => {
 };
 
 //delete single Note
-export const deleteNote = async (id) => {
-  const data = await Note.findByIdAndDelete(id);
+export const deleteNote = async (title) => {
+  await Note.findByIdAndDelete(title);
   return '';
 };
 
 //get single Note
-export const getNote = async (id) => {
-  const data = await Note.findById(id);
+export const getNote = async (title) => {
+  const data = await Note.findOne({Title:title});
   return data;
 };
