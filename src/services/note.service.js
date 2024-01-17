@@ -3,10 +3,6 @@ import User from '../models/user.model';
 
 //get all Notes
 export const getAllNotes = async (userId) => {
-  const user = await User.findOne({_id:userId})
-  if(!user){
-    throw new Error("Create User, User not found...");
-  }
   const data = await Note.find({UserID:userId});
   if(!data)
     throw new Error("User doesn't have Access.")
@@ -15,10 +11,6 @@ export const getAllNotes = async (userId) => {
 
 //create new Note
 export const newNote = async (body,userId) => {
-  const user = await User.findOne({_id:userId})
-  if(!user){
-    throw new Error("Create User, User not found...");
-  }
   let data = await Note.create(body);
   data.UserID = userId;
   data.save();
@@ -27,10 +19,6 @@ export const newNote = async (body,userId) => {
 
 //update single Note
 export const updateNote = async (_id, body,userId) => {
-  const user = await User.findOne({_id:userId})
-  if(!user){
-    throw new Error("Create User, User not found...");
-  }
   const data = await Note.findOneAndUpdate(
     {
       _id: _id,
@@ -48,10 +36,6 @@ export const updateNote = async (_id, body,userId) => {
 
 //delete single Note
 export const deleteNote = async (id,userId) => {
-  const user = await User.findOne({_id:userId})
-  if(!user){
-    throw new Error("Create User, User not found...");
-  }
   const data = await Note.findOneAndDelete({_id:id, UserID:userId });
   if(!data)
     throw new Error("User doesn't have Access.")
@@ -60,10 +44,6 @@ export const deleteNote = async (id,userId) => {
 
 //get single Note
 export const getNote = async (id,userId) => {
-  const user = await User.findOne({_id:userId})
-  if(!user){
-    throw new Error("Create User, User not found...");
-  }
   const data = await Note.findOne({_id:id, UserID:userId });
   if(!data)
     throw new Error("User doesn't have Access.")
@@ -71,10 +51,6 @@ export const getNote = async (id,userId) => {
 };
 
 export const isArchieved = async (_id,userId) =>{
-  const user = await User.findOne({_id:userId})
-  if(!user){
-    throw new Error("Create User, User not found...");
-  }
   let data = await Note.findById(_id);
   let body = { isArchieved: !data.isArchieved };
   data = await Note.findOneAndUpdate(
@@ -93,10 +69,6 @@ export const isArchieved = async (_id,userId) =>{
 }
 
 export const isDeleted = async (_id,userId) =>{
-  const user = await User.findOne({_id:userId})
-  if(!user){
-    throw new Error("Create User, User not found...");
-  }
   let data = await Note.findById(_id);
   let body = { isDeleted: !data.isDeleted };
   data = await Note.findOneAndUpdate(

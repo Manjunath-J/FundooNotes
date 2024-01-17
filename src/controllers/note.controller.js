@@ -4,7 +4,7 @@ import * as NoteService from '../services/note.service';
 
 export const getAllNotes = async (req, res, next) => {
   try {
-    const data = await NoteService.getAllNotes(req.user.UserID);
+    const data = await NoteService.getAllNotes(req.body.UserID);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: data,
@@ -21,7 +21,7 @@ export const getAllNotes = async (req, res, next) => {
 
 export const getNote = async (req, res, next) => {
   try {
-    const data = await NoteService.getNote(req.params._id,req.user.UserID);
+    const data = await NoteService.getNote(req.params._id,req.body.UserID);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: data,
@@ -38,7 +38,7 @@ export const getNote = async (req, res, next) => {
 
 export const newNote = async (req, res, next) => {
   try {
-    const data = await NoteService.newNote(req.body,req.user.UserID);
+    const data = await NoteService.newNote(req.body,req.body.UserID);
     res.status(HttpStatus.CREATED).json({
       code: HttpStatus.CREATED,
       data: data,
@@ -56,7 +56,7 @@ export const newNote = async (req, res, next) => {
 
 export const updateNote = async (req, res, next) => {
   try {
-    const data = await NoteService.updateNote(req.params._id, req.body,req.user.UserID);
+    const data = await NoteService.updateNote(req.params._id,req.body.UserID);
     res.status(HttpStatus.ACCEPTED).json({
       code: HttpStatus.ACCEPTED,
       data: data,
@@ -73,7 +73,7 @@ export const updateNote = async (req, res, next) => {
 
 export const deleteNote = async (req, res, next) => {
   try {
-    await NoteService.deleteNote(req.params._id,req.user.UserID);
+    await NoteService.deleteNote(req.params._id,req.body.UserID);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: [],
@@ -90,7 +90,7 @@ export const deleteNote = async (req, res, next) => {
 
 export const isArchieved = async (req, res, next) => {
   try {
-    const data = await NoteService.isArchieved(req.params._id,req.user.UserID);
+    const data = await NoteService.isArchieved(req.params._id,req.body.UserID);
     res.status(HttpStatus.CREATED).json({
       code: HttpStatus.CREATED,
       data: data,
@@ -107,7 +107,7 @@ export const isArchieved = async (req, res, next) => {
 
 export const isDeleted = async (req, res, next) => {
   try {
-    const data = await NoteService.isDeleted(req.params._id,req.user.UserID);
+    const data = await NoteService.isDeleted(req.params._id,req.body.UserID);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: data,

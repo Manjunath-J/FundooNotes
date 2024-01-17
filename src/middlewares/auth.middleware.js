@@ -12,10 +12,8 @@ export const userAuth = async (req, res, next) => {
       };
     bearerToken = bearerToken.split(' ')[1];
     
-    req.user = await jwt.verify(bearerToken, process.env.SECRET_KEY);
-    if(!req.user){
-      throw new Error("Invalid Token...");
-    }
+    const user = await jwt.verify(bearerToken, process.env.SECRET_KEY);
+    req.body.UserID = user.UserID;
 
     next();
   } catch (error) {
