@@ -4,7 +4,7 @@ import * as NoteService from '../services/note.service';
 
 export const getAllNotes = async (req, res, next) => {
   try {
-    const data = await NoteService.getAllNotes();
+    const data = await NoteService.getAllNotes(req.user.UserID);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: data,
@@ -21,7 +21,7 @@ export const getAllNotes = async (req, res, next) => {
 
 export const getNote = async (req, res, next) => {
   try {
-    const data = await NoteService.getNote(req.params.Title);
+    const data = await NoteService.getNote(req.params._id,req.user.UserID);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: data,
@@ -38,12 +38,13 @@ export const getNote = async (req, res, next) => {
 
 export const newNote = async (req, res, next) => {
   try {
-    const data = await NoteService.newNote(req.body);
+    const data = await NoteService.newNote(req.body,req.user.UserID);
     res.status(HttpStatus.CREATED).json({
       code: HttpStatus.CREATED,
       data: data,
       message: 'Note created successfully'
     });
+    next();
   } catch (error) {
     res.status(HttpStatus.BAD_REQUEST).json({
     code: HttpStatus.BAD_REQUEST,
@@ -55,7 +56,7 @@ export const newNote = async (req, res, next) => {
 
 export const updateNote = async (req, res, next) => {
   try {
-    const data = await NoteService.updateNote(req.params.Title, req.body);
+    const data = await NoteService.updateNote(req.params._id, req.body,req.user.UserID);
     res.status(HttpStatus.ACCEPTED).json({
       code: HttpStatus.ACCEPTED,
       data: data,
@@ -72,11 +73,45 @@ export const updateNote = async (req, res, next) => {
 
 export const deleteNote = async (req, res, next) => {
   try {
-    await NoteService.deleteNote(req.params.Title);
+    await NoteService.deleteNote(req.params._id,req.user.UserID);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: [],
       message: 'Note deleted successfully'
+    });
+  } catch (error) {
+    res.status(HttpStatus.BAD_REQUEST).json({
+    code: HttpStatus.BAD_REQUEST,
+    message: `${error}`
+  });
+  }
+};
+
+
+export const isArchieved = async (req, res, next) => {
+  try {
+    const data = await NoteService.isArchieved(req.params._id,req.user.UserID);
+    res.status(HttpStatus.CREATED).json({
+      code: HttpStatus.CREATED,
+      data: data,
+      message: 'Note Archieved successfully'
+    });
+  } catch (error) {
+    res.status(HttpStatus.BAD_REQUEST).json({
+    code: HttpStatus.BAD_REQUEST,
+    message: `${error}`
+  });
+  }
+};
+
+
+export const isDeleted = async (req, res, next) => {
+  try {
+    const data = await NoteService.isDeleted(req.params._id,req.user.UserID);
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
+      data: data,
+      message: 'Note moved to trash successfully'
     });
   } catch (error) {
     res.status(HttpStatus.BAD_REQUEST).json({

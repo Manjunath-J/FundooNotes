@@ -1,39 +1,115 @@
 import Note from '../models/note.model';
+import User from '../models/user.model';
 
 //get all Notes
-export const getAllNotes = async () => {
-  const data = await Note.find();
+export const getAllNotes = async (userId) => {
+  const user = await User.findOne({_id:userId})
+  if(!user){
+    throw new Error("Create User, User not found...");
+  }
+  const data = await Note.find({UserID:userId});
+  if(!data)
+    throw new Error("User doesn't have Access.")
   return data;
 };
 
 //create new Note
-export const newNote = async (body) => {
-  const data = await Note.create(body);
+export const newNote = async (body,userId) => {
+  const user = await User.findOne({_id:userId})
+  if(!user){
+    throw new Error("Create User, User not found...");
+  }
+  let data = await Note.create(body);
+  data.UserID = userId;
+  data.save();
   return data;
 };
 
 //update single Note
-export const updateNote = async (title, body) => {
+export const updateNote = async (_id, body,userId) => {
+  const user = await User.findOne({_id:userId})
+  if(!user){
+    throw new Error("Create User, User not found...");
+  }
   const data = await Note.findOneAndUpdate(
     {
-      title
+      _id: _id,
+      UserID:userId
     },
     body,
     {
       new: true
     }
   );
+  if(!data)
+    throw new Error("User doesn't have Access.")
   return data;
 };
 
 //delete single Note
-export const deleteNote = async (title) => {
-  await Note.findByIdAndDelete(title);
+export const deleteNote = async (id,userId) => {
+  const user = await User.findOne({_id:userId})
+  if(!user){
+    throw new Error("Create User, User not found...");
+  }
+  const data = await Note.findOneAndDelete({_id:id, UserID:userId });
+  if(!data)
+    throw new Error("User doesn't have Access.")
   return '';
 };
 
 //get single Note
-export const getNote = async (title) => {
-  const data = await Note.findOne({Title:title});
+export const getNote = async (id,userId) => {
+  const user = await User.findOne({_id:userId})
+  if(!user){
+    throw new Error("Create User, User not found...");
+  }
+  const data = await Note.findOne({_id:id, UserID:userId });
+  if(!data)
+    throw new Error("User doesn't have Access.")
   return data;
 };
+
+export const isArchieved = async (_id,userId) =>{
+  const user = await User.findOne({_id:userId})
+  if(!user){
+    throw new Error("Create User, User not found...");
+  }
+  let data = await Note.findById(_id);
+  let body = { isArchieved: !data.isArchieved };
+  data = await Note.findOneAndUpdate(
+    {
+      _id: _id,
+      UserID:userId
+    },
+    body,
+    {
+      new: true
+    }
+  );
+  if(!data)
+    throw new Error("User doesn't have Access.")
+  return data;
+}
+
+export const isDeleted = async (_id,userId) =>{
+  const user = await User.findOne({_id:userId})
+  if(!user){
+    throw new Error("Create User, User not found...");
+  }
+  let data = await Note.findById(_id);
+  let body = { isDeleted: !data.isDeleted };
+  data = await Note.findOneAndUpdate(
+    {
+      UserID:userId,
+      _id: _id
+    },
+    body,
+    {
+      new: true
+    }
+  );
+  if(!data)
+    throw new Error("User doesn't have Access.")
+  return data;
+}

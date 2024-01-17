@@ -1,5 +1,4 @@
 import User from '../models/user.model';
-import Note from '../models/note.model';
 import {hashPassword, verifyPassword} from './hashPassword';
 
 
@@ -28,7 +27,7 @@ export const logIn = async (body) => {
   if(!result){
     throw new Error("Password Mismatch.")
   }
-  const payload = { email:body.email };
+  const payload = { UserID:data._id };
   
   // const expiresIn = "1h";
   const token = jwt.sign(payload, process.env.SECRET_KEY);

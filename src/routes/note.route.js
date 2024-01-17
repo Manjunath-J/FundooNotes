@@ -2,6 +2,7 @@ import express from 'express';
 import * as NoteController from '../controllers/note.controller';
 import { NoteAuth, userAuth } from '../middlewares/auth.middleware';
 import { newNoteValidator } from '../validators/note.vallidator';
+import { isArchieved, isDeleted } from '../services/note.service';
 
 const router = express.Router();
 
@@ -12,12 +13,18 @@ router.get('',userAuth, NoteController.getAllNotes);
 router.post('',userAuth,newNoteValidator, NoteController.newNote);
 
 //route to get a single Note by their Note id
-router.get('/:Title',userAuth, NoteController.getNote);
+router.get('/:_id',userAuth, NoteController.getNote);
 
 //route to update a single Note by their Note id
-router.put('/:Title',userAuth, NoteController.updateNote);
+router.put('/:_id',userAuth, NoteController.updateNote);
 
 //route to delete a single Note by their Note id
-router.delete('/:Title',userAuth, NoteController.deleteNote);
+router.delete('/:_id',userAuth, NoteController.deleteNote);
+
+//route to archive the Note
+router.post('/isarch/:_id',userAuth, NoteController.isArchieved);
+
+//route to move Note to trash
+router.post('/isdeleted/:_id',userAuth, NoteController.isDeleted);
 
 export default router;
