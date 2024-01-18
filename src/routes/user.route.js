@@ -1,8 +1,7 @@
 import express from 'express';
 import * as userController from '../controllers/user.controller';
-import { newUserValidator } from '../validators/user.validator';
-import { userAuth } from '../middlewares/auth.middleware';
-import { authenticateToken } from '../services/user.service';
+import { emailValidator, newUserValidator, passwordValidator, siginValidator } from '../validators/user.validator';
+import { resetAuth, userAuth } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 
@@ -10,9 +9,10 @@ const router = express.Router();
 router.post('/signup', newUserValidator, userController.createUser);
 
 //route to sign-in of User
-router.post('/signin', userController.logIn);
+router.post('/signin',siginValidator, userController.logIn);
 
-// router.post('/signin/authenticate', userAuth.logIn);
-router.get('/signin/auth', authenticateToken);
+router.post('/forgotPassword', emailValidator, userController.forgotPassword);
+
+router.put('/resetPassword', passwordValidator, resetAuth, userController.resetPassword);
 
 export default router;

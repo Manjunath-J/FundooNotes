@@ -1,5 +1,6 @@
 import User from '../models/user.model';
 import {hashPassword, verifyPassword} from './hashPassword';
+import { sendResetMail } from '../utils/user.util';
 
 
 //create new user
@@ -36,6 +37,31 @@ export const logIn = async (body) => {
 };
 
 
+export const forgotPassword = async (body) =>{
+  const data = await User.findOne({email:body.email});
+  if(!data){
+    throw new Error("User not Found");
+  }    
+  const token = jwt.sign({email: body.email}, process.env.FORGOT_PASSWORD_KEY);
+  sendResetMail(body.email, token);
+  return token;
+}
+
+export const resetPassword = async (body) =>{
+    const hashedPassword = await hashPassword(body.password);
+    body.password = hashedPassword;
+    const pwd = await User.findOneAndUpdate(
+      {
+        email: body.email
+      },
+      body,
+      {
+        new: true
+      });
+    return pwd;
+}
+
+
 export const authenticateToken = (req, res) => {
   const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
 
@@ -52,5 +78,4 @@ export const authenticateToken = (req, res) => {
   catch (error) {
     throw new Error(error);
   }
-
 };
