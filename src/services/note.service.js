@@ -10,10 +10,8 @@ export const getAllNotes = async (userId) => {
 };
 
 //create new Note
-export const newNote = async (body,userId) => {
+export const newNote = async (body) => {
   let data = await Note.create(body);
-  data.UserID = userId;
-  data.save();
   return data;
 };
 

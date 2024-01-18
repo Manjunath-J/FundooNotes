@@ -38,13 +38,12 @@ export const getNote = async (req, res, next) => {
 
 export const newNote = async (req, res, next) => {
   try {
-    const data = await NoteService.newNote(req.body,req.body.UserID);
+    const data = await NoteService.newNote(req.body);
     res.status(HttpStatus.CREATED).json({
       code: HttpStatus.CREATED,
       data: data,
       message: 'Note created successfully'
     });
-    next();
   } catch (error) {
     res.status(HttpStatus.BAD_REQUEST).json({
     code: HttpStatus.BAD_REQUEST,
