@@ -1,6 +1,5 @@
 import HttpStatus from 'http-status-codes';
 import * as UserService from '../services/user.service';
-import { sendResetMail } from '../utils/user.util';
 
 //Create User
 export const createUser = async (req, res, next) => {
@@ -12,7 +11,7 @@ export const createUser = async (req, res, next) => {
       message: 'User created successfully'
     });
   } catch (error) {
-      res.status(HttpStatus.BAD_REQUEST).json({
+    res.status(HttpStatus.BAD_REQUEST).json({
       code: HttpStatus.BAD_REQUEST,
       message: `${error}`
     });
@@ -36,27 +35,23 @@ export const logIn = async (req, res, next) => {
   }
 };
 
-
-export const forgotPassword = async (req, res, next)=>{
+export const forgotPassword = async (req, res, next) => {
   try {
     const data = await UserService.forgotPassword(req.body);
-    sendResetMail(req.body.email, data);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: data,
       message: 'Token sent through mail'
     });
-
   } catch (error) {
     res.status(HttpStatus.BAD_REQUEST).json({
       code: HttpStatus.BAD_REQUEST,
       message: `${error}`
     });
   }
-}
+};
 
-
-export const resetPassword = async (req, res, next)=>{
+export const resetPassword = async (req, res, next) => {
   try {
     const data = await UserService.resetPassword(req.body);
     res.status(HttpStatus.OK).json({
@@ -70,4 +65,4 @@ export const resetPassword = async (req, res, next)=>{
       message: `${error}`
     });
   }
-}
+};

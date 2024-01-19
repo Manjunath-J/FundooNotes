@@ -90,8 +90,8 @@ export const deleteNote = async (req, res, next) => {
 export const isArchieved = async (req, res, next) => {
   try {
     const data = await NoteService.isArchieved(req.params._id,req.body.UserID);
-    res.status(HttpStatus.CREATED).json({
-      code: HttpStatus.CREATED,
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
       data: data,
       message: 'Note Archieved successfully'
     });

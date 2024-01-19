@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt');
 
 //Hashing the password 
 export async function hashPassword(password) {
-  console.log(password);
   return new Promise((resolve, reject) => {
     bcrypt.hash(password, 10, (err, hash) => {
       if (err) {

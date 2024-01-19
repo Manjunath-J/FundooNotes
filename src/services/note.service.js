@@ -1,3 +1,4 @@
+import { use } from 'chai';
 import Note from '../models/note.model';
 import User from '../models/user.model';
 
@@ -16,8 +17,8 @@ export const newNote = async (body) => {
 };
 
 //update single Note
-export const updateNote = async (_id, body,userId) => {
-  const data = await Note.findOneAndUpdate(
+export const updateNote = async (_id,userId,body) => {
+    const data = await Note.findOneAndUpdate(
     {
       _id: _id,
       UserID:userId
@@ -27,6 +28,7 @@ export const updateNote = async (_id, body,userId) => {
       new: true
     }
   );
+  console.log(data);
   if(!data)
     throw new Error("User doesn't have Access.")
   return data;
