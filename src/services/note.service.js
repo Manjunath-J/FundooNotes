@@ -18,6 +18,7 @@ export const newNote = async (body) => {
 
 //update single Note
 export const updateNote = async (_id,userId,body) => {
+  console.log(body,userId,_id)
     const data = await Note.findOneAndUpdate(
     {
       _id: _id,
@@ -28,7 +29,9 @@ export const updateNote = async (_id,userId,body) => {
       new: true
     }
   );
-  console.log(data);
+
+  console.log(data)
+
   if(!data)
     throw new Error("User doesn't have Access.")
   return data;

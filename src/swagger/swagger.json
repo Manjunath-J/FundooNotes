@@ -186,7 +186,7 @@
           ]
         }
       },
-      "/note/{noteid}": {
+      "/Notes/{noteid}": {
         "get": {
           "tags": ["Notes"],
           "summary": "Get a single note by it's id",
@@ -281,42 +281,42 @@
           ]
         }
       },
-      "/note/isarch/{noteid}": {
+      "/Notes/isarch/{noteid}": {
         "post": {
-          "tags": ["Notes"],
-          "summary": "Archieve a note for User",
-          "produces": [],
-          "parameters": [
-            {
-              "name": "nodeid",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "202": {
-              "description": "note archieved succesfully"
+            "tags": ["Notes"],
+            "summary": "Archieve a note to User",
+            "produces": [],
+            "parameters": [
+              {
+                "name": "noteid",
+                "in": "path",
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "responses": {
+              "202": {
+                "description": "note sent to trash succesfully"
+              },
+              "500": {
+                "description": "Internal server error"
+              }
             },
-            "500": {
-              "description": "Internal server error"
-            }
-          },
-          "security": [
-            {
-              "JWT": []
-            }
-          ]
-        }
+            "security": [
+              {
+                "JWT": []
+              }
+            ]
+          }
       },
-      "/note/isdeleted/{nodeid}": {
+      "/Notes/isdeleted/{noteid}": {
         "post": {
           "tags": ["Notes"],
           "summary": "Send a note to trash",
           "produces": [],
           "parameters": [
             {
-              "name": "nodeid",
+              "name": "noteid",
               "in": "path",
               "required": true,
               "type": "string"
@@ -402,12 +402,6 @@
           },
           "color": {
             "type": "string"
-          },
-          "isArchieved": {
-            "type": "boolean"
-          },
-          "isDeleted": {
-            "type": "boolean"
           }
         }
       }
