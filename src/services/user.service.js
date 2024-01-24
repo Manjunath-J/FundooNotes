@@ -30,7 +30,6 @@ export const logIn = async (body) => {
 
   // const expiresIn = "1h";
   const token = jwt.sign(payload, process.env.SECRET_KEY);
-
   return token;
 };
 

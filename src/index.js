@@ -19,6 +19,7 @@ import logger, { logStream } from './config/logger';
 import morgan from 'morgan';
 
 import redis from './config/redis';
+import { publishMessage } from './utils/sender.util';
 
 const app = express();
 const host = process.env.APP_HOST;
@@ -35,6 +36,8 @@ app.use('/api-docs', swagger.serve, swagger.setup(swaggerDocument));
 
 redis();
 database();
+
+publishMessage();
 
 app.use(`/api/${api_version}`, routes());
 app.use(appErrorHandler);
