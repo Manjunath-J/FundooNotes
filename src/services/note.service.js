@@ -1,12 +1,17 @@
 import { use } from 'chai';
 import Note from '../models/note.model';
 import User from '../models/user.model';
+import { client } from '../config/redis';
+import { json } from 'express';
 
 //get all Notes
 export const getAllNotes = async (userId) => {
   const data = await Note.find({UserID:userId});
   if(!data)
     throw new Error("User doesn't have Access.")
+
+    const key = userId;
+    client.set(key, JSON.stringify(data));
   return data;
 };
 
@@ -18,7 +23,6 @@ export const newNote = async (body) => {
 
 //update single Note
 export const updateNote = async (_id,userId,body) => {
-  console.log(body,userId,_id)
     const data = await Note.findOneAndUpdate(
     {
       _id: _id,
@@ -29,8 +33,6 @@ export const updateNote = async (_id,userId,body) => {
       new: true
     }
   );
-
-  console.log(data)
 
   if(!data)
     throw new Error("User doesn't have Access.")

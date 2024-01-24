@@ -18,6 +18,8 @@ import logger, { logStream } from './config/logger';
 
 import morgan from 'morgan';
 
+import redis from './config/redis';
+
 const app = express();
 const host = process.env.APP_HOST;
 const port = process.env.APP_PORT;
@@ -31,6 +33,7 @@ app.use(morgan('combined', { stream: logStream }));
 
 app.use('/api-docs', swagger.serve, swagger.setup(swaggerDocument));
 
+redis();
 database();
 
 app.use(`/api/${api_version}`, routes());

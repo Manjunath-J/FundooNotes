@@ -3,11 +3,12 @@ import * as NoteController from '../controllers/note.controller';
 import { NoteAuth, userAuth } from '../middlewares/auth.middleware';
 import { newNoteValidator } from '../validators/note.vallidator';
 import { isArchieved, isDeleted } from '../services/note.service';
+import { cacheMiddleware } from '../middlewares/cache.middleware';
 
 const router = express.Router();
 
 //route to get all Notes
-router.get('',userAuth, NoteController.getAllNotes);
+router.get('',userAuth, cacheMiddleware, NoteController.getAllNotes);
 
 //route to create a new Note
 router.post('',userAuth,newNoteValidator, NoteController.newNote);
