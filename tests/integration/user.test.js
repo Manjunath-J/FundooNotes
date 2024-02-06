@@ -123,7 +123,7 @@ describe('User APIs Test', () => {
 
     it('Given Archieving Note by ID should return status 202', (done) => {
       request(app)
-        .post(`/api/v1/Notes/isarch/${id}`)
+        .get(`/api/v1/Notes/isarch/${id}`)
         .set('Authorization', `Bearer ${userToken}`)
         .end((err, res) => {
           expect(res.statusCode).to.be.equal(HttpStatus.OK);
@@ -134,7 +134,7 @@ describe('User APIs Test', () => {
 
     it('Given Moving Note to Trash by ID should return status 202', (done) => {
       request(app)
-        .post(`/api/v1/Notes/isdeleted/${id}`)
+        .get(`/api/v1/Notes/isdeleted/${id}`)
         .set('Authorization', `Bearer ${userToken}`)
         .end((err, res) => {
           expect(res.statusCode).to.be.equal(HttpStatus.OK);

@@ -34,10 +34,10 @@ app.use(morgan('combined', { stream: logStream }));
 
 app.use('/api-docs', swagger.serve, swagger.setup(swaggerDocument));
 
-redis();
+// redis();
 database();
 
-publishMessage();
+// publishMessage();
 
 app.use(`/api/${api_version}`, routes());
 app.use(appErrorHandler);

@@ -11,7 +11,7 @@ const noteSchema = new Schema(
         required: true
     },
     color: {
-        type: String
+        type: String, default: ''
     },
     isArchieved: {
         type: Boolean,

@@ -282,7 +282,7 @@
         }
       },
       "/Notes/isarch/{noteid}": {
-        "post": {
+        "get": {
             "tags": ["Notes"],
             "summary": "Archieve a note to User",
             "produces": [],
@@ -310,7 +310,7 @@
           }
       },
       "/Notes/isdeleted/{noteid}": {
-        "post": {
+        "get": {
           "tags": ["Notes"],
           "summary": "Send a note to trash",
           "produces": [],
